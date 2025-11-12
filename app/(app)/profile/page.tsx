@@ -2,14 +2,12 @@
 
 import Image from "next/image";
 import { Settings, LogOut, User } from "lucide-react";
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 
 export default function ProfilePage() {
-    const user = {
-        name: "Kevin Krisma",
-        email: "kevin@example.com",
-        avatar: "https://api.dicebear.com/9.x/lorelei-neutral/svg?seed=Sara",
-    };
+    const { user } = useUser();
+
+    console.log(user)
 
     const menuItems = [
         { name: "Edit Profil", icon: User, action: () => alert("Edit Profil") },
@@ -29,8 +27,8 @@ export default function ProfilePage() {
             <SignedIn>
                 <div className="flex flex-col items-center text-center mb-6">
                     <UserButton />
-                    <h1 className="text-xl font-semibold dark:text-white">{user.name}</h1>
-                    <p className="text-sm text-muted-foreground dark:text-white">{user.email}</p>
+                     <h1 className="text-xl font-semibold dark:text-white">{user?.fullName}</h1>
+                    <p className="text-sm text-muted-foreground dark:text-white">{user?.primaryEmailAddress?.emailAddress}</p> 
                 </div>
 
                 <div className="space-y-3">
