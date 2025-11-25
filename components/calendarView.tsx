@@ -86,7 +86,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ currentDate, setCurrentDate
                 <div className="bg-white dark:bg-slate-800 px-4 pt-2 pb-4 flex justify-between items-center text-gray-400 text-sm font-semibold rounded-lg mb-4">
                     <button onClick={() => changeMonth(-1)}>{monthNames[(currentDate.getMonth() - 1 + 12) % 12]}</button>
                     <div className="bg-[#8A6CFF] dark:bg-purple-800 text-white px-6 py-2 rounded-full shadow-md shadow-purple-200 dark:shadow-purple-900">
-                        {monthNames[currentDate.getMonth()]}
+                        {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
                     </div>
                     <button onClick={() => changeMonth(1)}>{monthNames[(currentDate.getMonth() + 1) % 12]}</button>
                 </div>
