@@ -32,7 +32,7 @@ export default function ProfilePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-slate-900 dark:to-slate-950 p-6 flex flex-col items-center">
+    <div className="p-6 flex flex-col items-center">
       {/* --- BELUM LOGIN (DUMMY) --- */}
       {
         !session ? (
