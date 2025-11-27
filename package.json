@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "prisma": "dotenv -c -- prisma",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prebuild": "prisma generate",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",

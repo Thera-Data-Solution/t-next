@@ -14,12 +14,12 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String?  @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
-  Role          RoleList @default(User)
+  Role          RoleList  @default(User)
   accounts      Account[]
   sessions      Session[]
 }
@@ -60,7 +60,49 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Ustadzh {
+  id         String  @id @default(cuid())
+  nama       String
+  bio        String?
+}
+
+model JadwalKajian {
+  id           String   @id @default(cuid())
+  ustadzhId    String
+  waktuMulai   DateTime
+  waktuSelesai DateTime
+
+  kajianJudul String
+  KajianGenre Genre  @default(All)
+  KajianUmur  Umur   @default(All)
+
+  lokasiOffline    String?
+  linkLokasiOnline String?
+  lokasiOnline     String?
+
+  gambar String?
+
+  sumber String?
+
+  createdAt DateTime @default(now())
+  createdBy String
+  updatedAt DateTime @updatedAt
+  updatedBy String
+}
+
 enum RoleList {
   Admin
   User
+}
+
+enum Genre {
+  All
+  Ikhwan
+  Akhwat
+}
+
+enum Umur {
+  All
+  Dewasa
+  Anak
 }
