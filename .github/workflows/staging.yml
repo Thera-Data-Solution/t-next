@@ -6,7 +6,7 @@ on:
       - "release/staging"
 
 jobs:
-  theravickya_uat:
+  uat:
     runs-on: ubuntu-latest
     environment: Preview
     steps:

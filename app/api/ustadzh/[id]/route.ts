@@ -1,14 +1,13 @@
+import { NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function PUT({
-  params,
-  request,
-}: {
-  params: Promise<{ id: string }>;
-  request: Request;
-}) {
-  const { id } = await params;
+export async function PUT(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
   const body = await request.json();
+
   try {
     const update = await prisma.ustadzh.update({
       where: { id },
@@ -35,8 +34,12 @@ export async function PUT({
   }
 }
 
-export async function DELETE({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export async function DELETE(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
+
   try {
     await prisma.ustadzh.delete({
       where: { id },
