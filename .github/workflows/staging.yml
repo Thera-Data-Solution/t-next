@@ -9,6 +9,8 @@ jobs:
   uat:
     runs-on: ubuntu-latest
     environment: Preview
+    env:
+      NEXT_DISABLE_TURBOPACK: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
