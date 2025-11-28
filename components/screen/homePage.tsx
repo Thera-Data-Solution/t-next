@@ -1,39 +1,32 @@
-"use client"
-import CalendarView from '@/components/calendarView';
-import { MOCK_EVENTS } from '@/constant/mock';
-import React, { useState } from 'react';
-import DayView from '../dayView';
+"use client";
 
-const HomeScreen: React.FC = () => {
-   const [currentDate, setCurrentDate] = useState(new Date());
+import { useEffect, useState } from "react";
+import CalendarView from "@/components/calendarView";
 
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+export default function HomeScreen() {
+    const [kajian, setKajian] = useState([]);
 
-    const handleDateSelect = (date: Date) => {
-        setSelectedDate(date);
+    useEffect(() => {
+        const fetchKajian = async () => {
+            try {
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_URL}/api/kajian`
+                );
+                const json = await res.json();
+                setKajian(json.data || []);
+            } catch (err) {
+                console.error("Error fetching kajian:", err);
+            }
+        };
 
-    };
-
-    const handleBackToCalendar = () => {
-        setSelectedDate(null);
-    };
+        fetchKajian();
+    }, []);
 
     return (
         <div className="h-full w-full">
-            {
-                !selectedDate ? (
-                    <div className='p-4'>
-                        <CalendarView
-                            currentDate={currentDate}
-                            setCurrentDate={setCurrentDate}
-                            onDateSelect={handleDateSelect}
-                            events={MOCK_EVENTS}
-                        />
-                    </div> 
-                ) : <DayView selectedDate={selectedDate} onBack={handleBackToCalendar} events={MOCK_EVENTS} />
-            }
+            <div className="p-4">
+                <CalendarView kajian={kajian} />
+            </div>
         </div>
     );
-};
-
-export default HomeScreen;
+}
