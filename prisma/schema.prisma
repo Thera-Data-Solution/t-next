@@ -61,13 +61,15 @@ model VerificationToken {
 }
 
 model Ustadzh {
-  id         String  @id @default(cuid())
-  nama       String
-  bio        String?
+  id            String         @id @default(cuid())
+  nama          String
+  bio           String?
+  jadwalKajians JadwalKajian[]
 }
 
 model JadwalKajian {
   id           String   @id @default(cuid())
+  ustadzh      Ustadzh  @relation(fields: [ustadzhId], references: [id], onDelete: Cascade)
   ustadzhId    String
   waktuMulai   DateTime
   waktuSelesai DateTime
