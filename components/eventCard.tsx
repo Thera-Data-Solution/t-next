@@ -2,13 +2,13 @@
 import React from 'react';
 import { MapPin, Clock, Users, Video } from 'lucide-react';
 import { KajianData } from '@/types/event';
+import Link from 'next/link';
 
 interface EventCardProps {
     event: KajianData;
-    onClick: () => void;
 }
 
-export const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
+export const EventCard: React.FC<EventCardProps> = ({ event }) => {
     const startDate = new Date(event.waktuMulai);
     const endDate = new Date(event.waktuSelesai);
 
@@ -24,8 +24,8 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
     });
 
     return (
-        <button
-            onClick={onClick}
+        <Link
+            href={`/kajian/${event.id}`}
             className="
         w-full text-left 
         bg-slate-50 dark:bg-slate-900
@@ -95,11 +95,6 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
                     {event.kajianJudul}
 
                 </p>
-                {event.ustadzh && (
-                    <p className="text-sm opacity-90 font-medium dark:text-slate-200 text-slate-700">
-                        Oleh: <span className="font-semibold">{event.ustadzh.nama}</span>
-                    </p>
-                )}
 
 
                 <div className="space-y-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-auto">
@@ -126,7 +121,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onClick }) => {
                     </div>
                 </div>
             </div>
-        </button>
+        </Link>
 
     );
 };

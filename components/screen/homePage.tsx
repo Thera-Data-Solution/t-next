@@ -1,31 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import CalendarView from "@/components/calendarView";
+import { KajianData } from "@/types/event";
+import { use } from "react";
 
-export default function HomeScreen() {
-    const [kajian, setKajian] = useState([]);
-
-    useEffect(() => {
-        const fetchKajian = async () => {
-            try {
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_URL}/api/kajian`
-                );
-                const json = await res.json();
-                setKajian(json.data || []);
-            } catch (err) {
-                console.error("Error fetching kajian:", err);
-            }
-        };
-
-        fetchKajian();
-    }, []);
-
+export default function HomeScreen({ kajian }: { kajian: Promise<KajianData[]> }) {
+    const data = use(kajian);
     return (
         <div className="h-full w-full">
             <div className="p-4">
-                <CalendarView kajian={kajian} />
+                <CalendarView kajian={data || []} />
             </div>
         </div>
     );

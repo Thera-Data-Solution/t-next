@@ -21,7 +21,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <div className="flex-1 pb-16">{children}</div>
 
-      {/* Bottom Navigation */}
       <nav className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md rounded-2xl border backdrop-blur-md shadow-lg bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700">
         <ul className="flex justify-around py-3 text-sm font-medium">
           {navItems.map((item) => {

@@ -6,7 +6,6 @@ import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Info, CalendarRang
 import { KajianData } from '@/types/event';
 import { EventCard } from './eventCard';
 import { DateEventsModal } from './dateEvent';
-import { EventDetailModal } from './eventDetail';
 
 const DAYS = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
 const MONTHS = [
@@ -17,7 +16,6 @@ const MONTHS = [
 export default function CalendarView({ kajian }: { kajian: KajianData[] }) {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 10, 1));
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<KajianData | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   const year = currentDate.getFullYear();
@@ -63,7 +61,7 @@ export default function CalendarView({ kajian }: { kajian: KajianData[] }) {
       days.push({ date, isCurrentMonth: true, events: getEventsForDate(date) });
     }
 
-    const remainingSlots = 42 - days.length; // 6 rows * 7 cols
+    const remainingSlots = 42 - days.length;
     for (let i = 1; i <= remainingSlots; i++) {
       const date = new Date(year, month + 1, i);
       days.push({ date, isCurrentMonth: false, events: getEventsForDate(date) });
@@ -108,7 +106,7 @@ export default function CalendarView({ kajian }: { kajian: KajianData[] }) {
           <div className='bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 sm:p-6'>
 
             <div className="flex items-center justify-between mb-4 sm:mb-6">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-800 capitalize">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-200 capitalize">
                 {MONTHS[month]} {year}
               </h2>
               <div className="flex items-center gap-1 sm:gap-2">
@@ -228,7 +226,6 @@ export default function CalendarView({ kajian }: { kajian: KajianData[] }) {
                   <EventCard
                     key={event.id}
                     event={event}
-                    onClick={() => setSelectedEvent(event)}
                   />
                 ))
               ) : (
@@ -267,13 +264,6 @@ export default function CalendarView({ kajian }: { kajian: KajianData[] }) {
           date={selectedDate}
           events={getEventsForDate(selectedDate)}
           onClose={() => setSelectedDate(null)}
-          onEventClick={setSelectedEvent}
-        />
-      )}
-      {selectedEvent && (
-        <EventDetailModal
-          event={selectedEvent}
-          onClose={() => setSelectedEvent(null)}
         />
       )}
     </div>

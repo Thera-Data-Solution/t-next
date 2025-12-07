@@ -19,7 +19,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  Role          RoleList  @default(User)
+  role          RoleList  @default(User)
   accounts      Account[]
   sessions      Session[]
 }
@@ -64,13 +64,13 @@ model Ustadzh {
   id            String         @id @default(cuid())
   nama          String
   bio           String?
-  jadwalKajians JadwalKajian[]
+  jadwalKajians JadwalKajian[] @relation("UstadzhToKajian")
 }
 
 model JadwalKajian {
   id           String   @id @default(cuid())
-  ustadzh      Ustadzh  @relation(fields: [ustadzhId], references: [id], onDelete: Cascade)
-  ustadzhId    String
+  ustadzhList     Ustadzh[]       @relation("UstadzhToKajian")
+  
   waktuMulai   DateTime
   waktuSelesai DateTime
 

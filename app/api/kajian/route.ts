@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const data = await prisma.jadwalKajian.findMany({
     include: {
-      ustadzh: true,
+      ustadzhList: true,
     },
     orderBy: { waktuMulai: "asc" },
   });
@@ -14,41 +14,48 @@ export async function GET() {
 }
 
 // POST /api/kajian
-export async function POST(request: Request) {
-  const body = await request.json();
-
-  const {
-    ustadzhId,
-    waktuMulai,
-    waktuSelesai,
-    kajianJudul,
-    KajianGenre,
-    KajianUmur,
-    lokasiOffline,
-    lokasiOnline,
-    linkLokasiOnline,
-    gambar,
-    sumber,
-    createdBy,
-  } = body;
-
-  const newKajian = await prisma.jadwalKajian.create({
-    data: {
-      ustadzhId,
-      waktuMulai: new Date(waktuMulai),
-      waktuSelesai: new Date(waktuSelesai),
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const {
       kajianJudul,
+      waktuMulai,
+      waktuSelesai,
+      ustadzhIds,
+      createdBy = "admin",
+      updatedBy = "admin",
       KajianGenre,
       KajianUmur,
       lokasiOffline,
-      lokasiOnline,
       linkLokasiOnline,
+      lokasiOnline,
       gambar,
       sumber,
-      createdBy,
-      updatedBy: createdBy,
-    },
-  });
+    } = body;
 
-  return NextResponse.json({ status: "success", data: newKajian });
+    const result = await prisma.jadwalKajian.create({
+      data: {
+        kajianJudul,
+        waktuMulai: new Date(waktuMulai),
+        waktuSelesai: new Date(waktuSelesai),
+        createdBy,
+        updatedBy,
+        ustadzhList: {
+          connect: ustadzhIds.map((id: string) => ({ id })),
+        },
+        KajianGenre,
+        KajianUmur,
+        lokasiOffline,
+        linkLokasiOnline,
+        lokasiOnline,
+        gambar,
+        sumber,
+      },
+    });
+
+    return NextResponse.json(result);
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+  }
 }

@@ -82,12 +82,6 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({ event, onClo
                         <h2 className="text-2xl sm:text-3xl font-bold leading-tight shadow-sm mb-1">
                             {event.kajianJudul}
                         </h2>
-
-                        {event.ustadzh && (
-                            <p className="text-sm opacity-90 font-medium">
-                                Oleh: <span className="font-semibold">{event.ustadzh.nama}</span>
-                            </p>
-                        )}
                     </div>
                 </div>
 
@@ -185,19 +179,21 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({ event, onClo
                         </h3>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {event.ustadzh && (
                                 <div className="
-                            flex items-center gap-3 p-3 
+                            flex gap-3 p-3 
                             rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 
                             transition-colors
                         ">
                                     <User className="w-5 h-5 text-gray-400 dark:text-slate-500" />
                                     <div>
                                         <p className="text-xs text-gray-500 dark:text-slate-400">Pengisi Kajian</p>
-                                        <p className="text-sm font-medium text-gray-900 dark:text-slate-100">{event.ustadzh.nama}</p>
+                                        {
+                                            event.ustadzhList.map((ustadzh) => (
+                                                <p key={ustadzh.id} className="text-sm font-medium text-gray-900 dark:text-slate-100">- {ustadzh.nama}</p>
+                                            ))
+                                        }
                                     </div>
                                 </div>
-                            )}
 
                             <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
                                 <Users className="w-5 h-5 text-gray-400 dark:text-slate-500" />

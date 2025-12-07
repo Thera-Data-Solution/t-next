@@ -9,7 +9,7 @@ export async function GET(
 
   const data = await prisma.jadwalKajian.findUnique({
     where: { id },
-    include: { ustadzh: true },
+    include: { ustadzhList: true },
   });
 
   if (!data) {
@@ -47,7 +47,9 @@ export async function PUT(
   const updated = await prisma.jadwalKajian.update({
     where: { id },
     data: {
-      ustadzhId,
+      ustadzhList: {
+        connect: { id: ustadzhId },
+      },
       waktuMulai: waktuMulai ? new Date(waktuMulai) : undefined,
       waktuSelesai: waktuSelesai ? new Date(waktuSelesai) : undefined,
       kajianJudul,

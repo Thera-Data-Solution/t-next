@@ -9,10 +9,9 @@ interface DateEventsModalProps {
     date: Date;
     events: KajianData[];
     onClose: () => void;
-    onEventClick: (event: KajianData) => void;
 }
 
-export const DateEventsModal: React.FC<DateEventsModalProps> = ({ date, events, onClose, onEventClick }) => {
+export const DateEventsModal: React.FC<DateEventsModalProps> = ({ date, events, onClose }) => {
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         return () => {
@@ -56,7 +55,6 @@ export const DateEventsModal: React.FC<DateEventsModalProps> = ({ date, events, 
                                 <EventCard
                                     key={event.id}
                                     event={event}
-                                    onClick={() => onEventClick(event)}
                                 />
                             ))}
                         </div>
