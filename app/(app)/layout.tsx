@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { Home, CalendarDays, User } from "lucide-react";
+import { Home, CalendarDays, User, CircleDashed } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
 
@@ -14,6 +14,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const navItems = [
     { name: "Home", icon: Home, path: "/dzikir" },
     { name: "Calendar", icon: CalendarDays, path: "/" },
+    { name: "Tasbih", icon: CircleDashed, path: "/tasbih" },
     { name: "Profile", icon: User, path: "/profile" },
   ];
 

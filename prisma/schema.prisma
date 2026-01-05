@@ -13,6 +13,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model DzikirCategory {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String?
+  icon        String?
+  groups      Dzikir[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Dzikir {
+  id    String @id @default(cuid())
+  title String
+  order Int
+
+  categoryId String
+  category   DzikirCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  items DzikirItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DzikirItem {
+  id              String  @id @default(cuid())
+  arabic          String
+  transliteration String?
+  translation     String?
+  count           Int     @default(1)
+  order           Int
+
+  dzikirId String
+  dzikir   Dzikir @relation(fields: [dzikirId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -68,9 +109,9 @@ model Ustadzh {
 }
 
 model JadwalKajian {
-  id           String   @id @default(cuid())
-  ustadzhList     Ustadzh[]       @relation("UstadzhToKajian")
-  
+  id          String    @id @default(cuid())
+  ustadzhList Ustadzh[] @relation("UstadzhToKajian")
+
   waktuMulai   DateTime
   waktuSelesai DateTime
 
@@ -94,6 +135,7 @@ model JadwalKajian {
 
 enum RoleList {
   Admin
+  Moderator
   User
 }
 

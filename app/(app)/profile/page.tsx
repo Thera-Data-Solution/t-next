@@ -1,58 +1,39 @@
 "use client";
 
-import { Settings, User, LogOut, Info, HelpCircle, BookOpenText } from "lucide-react";
+import { Settings, User, LogOut, Info, HelpCircle, BookOpenText, LayoutGrid } from "lucide-react";
 import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { MenuSection } from "./menuSection";
+import { MenuItem } from "@/types/menu";
 
 export default function ProfilePage() {
   const { data: session, status } = useSession();
-   const router = useRouter();
+  const router = useRouter();
 
-  const isAdmin = session?.user?.role === "Admin";
+  const role = session?.user?.role;
+  const isModerator = role === "Moderator" || role === "Admin";
+  const isAdmin = role === "Admin";
 
-  const baseMenuItems = [
-    { name: "Edit Profil", icon: User, action: () => alert("Edit Profil"), component: undefined },
-    { name: "Pengaturan", icon: Settings, action: () => alert("Pengaturan"), component: undefined },
-    { name: "Bantuan", icon: HelpCircle, action: () => alert("Pusat Bantuan"), component: undefined },
-    {
-      name: "Tentang Aplikasi",
-      icon: Info,
-      action: () => alert("Versi 1.0.0 - Dibuat oleh Tim Theravick"),
-      component: undefined,
-    },
+
+  const baseMenuItems: MenuItem[] = [
+    { name: "Edit Profil", icon: User, action: () => alert("Edit Profil") },
+    { name: "Pengaturan", icon: Settings, action: () => alert("Pengaturan") },
+    { name: "Bantuan", icon: HelpCircle, action: () => alert("Pusat Bantuan") },
+    { name: "Tentang Aplikasi", icon: Info, action: () => alert("Versi 1.0.0") },
   ];
 
-  const adminMenuItems = [
-    { name: "Tambah Ustadzh", icon: Settings, action: () => router.push('/admin/ustadzh'), component: undefined },
-    { name: "Tambah Kajian", icon: BookOpenText, action: () => router.push('/admin/kajian'), component: undefined },
-    { name: "Tambah Dzikir", icon: Info, action: () => alert("Tambah Dzikir"), component: undefined },
-    { name: "Kelola Pengguna", icon: User, action: () => alert("Kelola Pengguna"), component: undefined },
+  const moderatorMenuItems: MenuItem[] = [
+    { name: "Tambah Ustadzh", icon: Settings, action: () => router.push("/admin/ustadzh") },
+    { name: "Tambah Kajian", icon: BookOpenText, action: () => router.push("/admin/kajian") },
+    { name: "Tambah Dzikir", icon: Info, action: () => alert("Tambah Dzikir") },
+    { name: "Kategori Dzikir", icon: LayoutGrid, action: () => alert("Kategori Dzikir") },
   ];
 
-  const logoutItem = {
-    name: "Logout",
-    icon: LogOut,
-    action: undefined,
-    component: () => (
-      <button
-        onClick={() => signOut()}
-        className="w-full flex items-center justify-between p-4 rounded-xl border shadow-sm dark:bg-slate-800 dark:text-white hover:bg-red-500/10 transition cursor-pointer"
-      >
-        <div className="flex items-center space-x-3">
-          <LogOut className="w-5 h-5 text-red-500" />
-          <span className="font-medium">Logout</span>
-        </div>
-        <span className="text-gray-400">›</span>
-      </button>
-    ),
-  };
-
-  const menuItems = [
-    ...baseMenuItems,
-    ...(isAdmin ? adminMenuItems : []),
-    logoutItem,
+  const adminMenuItems: MenuItem[] = [
+    { name: "Kelola Pengguna", icon: User, action: () => alert("Kelola Pengguna") },
   ];
+
 
   return (
     <div className="p-6 flex flex-col items-center">
@@ -117,25 +98,34 @@ export default function ProfilePage() {
               </p>
             </div>
 
-            <div className="space-y-3">
-              {menuItems.map(({ name, icon: Icon, action, component }, i) =>
-                component ? (
-                  <div key={i}>{component()}</div>
-                ) : (
-                  <div
-                    key={i}
-                    onClick={action}
-                    className="flex items-center justify-between p-4 rounded-xl border shadow-sm dark:bg-slate-800 dark:text-white hover:bg-blue-500/10 transition cursor-pointer"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <Icon className="w-5 h-5 text-blue-500" />
-                      <span className="font-medium">{name}</span>
-                    </div>
-                    <span className="text-gray-400">›</span>
-                  </div>
-                )
+
+            <div className="space-y-4">
+              <MenuSection title="Akun" items={baseMenuItems} />
+
+              {isModerator && (
+                <MenuSection title="Moderator" items={moderatorMenuItems} />
               )}
+
+              {isAdmin && (
+                <MenuSection title="Administrator" items={adminMenuItems} />
+              )}
+
+              {/* Logout section */}
+              <div>
+                <button
+                  onClick={() => signOut()}
+                  className="w-full flex items-center justify-between p-4 rounded-xl border
+                 shadow-sm hover:bg-red-500/10 transition dark:bg-slate-800"
+                >
+                  <div className="flex items-center space-x-3">
+                    <LogOut className="w-5 h-5 text-red-500" />
+                    <span className="font-medium">Logout</span>
+                  </div>
+                  <span className="text-gray-400">›</span>
+                </button>
+              </div>
             </div>
+
           </div>
         )
       }
