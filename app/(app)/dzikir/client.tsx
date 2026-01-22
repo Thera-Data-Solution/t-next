@@ -15,15 +15,15 @@ export default function ClientPage({ data }: { data: DzikirCategory[] }) {
                     <Link
                         href={`/dzikir/${item.slug}`}
                         key={item.id}
-                        className="group flex items-center p-4 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:border-emerald-100 transition-all text-left"
+                        className="group flex items-center p-4 bg-white dark:bg-slate-800 dark:text-slate-200 border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:border-emerald-100 transition-all text-left"
                     >
                         <div className="w-12 h-12 flex items-center justify-center bg-emerald-50 text-2xl rounded-xl group-hover:scale-110 transition-transform">
                             {item.icon}
                       
                         </div>
                         <div className="ml-4 flex-1">
-                            <h3 className="font-bold text-slate-800">{item.title}</h3>
-                            <p className="text-xs text-slate-500 line-clamp-1">{item.description}</p>
+                            <h3 className="font-bold text-slate-800 dark:text-slate-100">{item.title}</h3>
+                            <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">{item.description}</p>
                         </div>
                         <ChevronRight className="text-slate-300 group-hover:text-emerald-500 transition-colors" size={20} />
                     </Link>

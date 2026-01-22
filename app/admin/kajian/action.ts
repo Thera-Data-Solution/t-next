@@ -2,11 +2,8 @@
 
 import prisma from "@/lib/prisma";
 import { Genre, Umur } from "@prisma/client";
-import { cacheTag, updateTag } from "next/cache";
 
 export async function getAllJadwalKajian() {
-    "use cache";
-    cacheTag("jadwal_kajian_list");
 
     return prisma.jadwalKajian.findMany({
         include: {
@@ -55,8 +52,6 @@ export async function createJadwalKajian(data: {
             },
         },
     });
-
-    updateTag("jadwal_kajian_list");
 }
 
 export async function updateJadwalKajian(
@@ -94,14 +89,10 @@ export async function updateJadwalKajian(
             },
         },
     });
-
-    updateTag("jadwal_kajian_list");
 }
 
 export async function deleteJadwalKajian(id: string) {
     await prisma.jadwalKajian.delete({
         where: { id },
     });
-
-    updateTag("jadwal_kajian_list");
 }

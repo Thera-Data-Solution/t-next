@@ -2,22 +2,30 @@
 
 import { useState } from "react";
 import {
-  createJadwalKajian,
-  updateJadwalKajian,
   deleteJadwalKajian,
 } from "./action";
 import FormModal from "@/components/form/kajian";
 import { JadwalKajian, Ustadzh } from "@prisma/client";
 
-export default function JadwalKajianClient({ data, ustadzh }: {data: JadwalKajian[]; ustadzh: Ustadzh[]}) {
+type JadwalKajianWithUstadzh = JadwalKajian & {
+  ustadzhList: Ustadzh[];
+};
+
+export default function JadwalKajianClient({
+  data,
+  ustadzh,
+}: {
+  data: JadwalKajianWithUstadzh[];
+  ustadzh: Ustadzh[];
+}) {
   const [open, setOpen] = useState(false);
-  const [editing, setEditing] = useState(null);
+  const [editing, setEditing] = useState<JadwalKajianWithUstadzh>();
 
   return (
     <>
       <button
         onClick={() => {
-          setEditing(null);
+          setEditing(undefined);
           setOpen(true);
         }}
         className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
@@ -26,7 +34,7 @@ export default function JadwalKajianClient({ data, ustadzh }: {data: JadwalKajia
       </button>
 
       <div className="space-y-3">
-        {data.map((item: JadwalKajian) => (
+        {data.map((item) => (
           <div
             key={item.id}
             className="border rounded p-4 flex justify-between items-center"

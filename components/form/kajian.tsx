@@ -21,12 +21,11 @@ type kajianProps = {
     waktuSelesai: Date;
     KajianGenre: Genre;
     KajianUmur: Umur;
-    lokasiOffline?: string;
-    lokasiOnline?: string;
-    linkLokasiOnline?: string;
-    sumber?: string;
+    lokasiOffline?: string | null;
+    lokasiOnline?: string | null;
+    linkLokasiOnline?: string | null;
+    sumber?: string | null;
     createdBy: string;
-    ustadzhIds: string[];
 }
 
 
