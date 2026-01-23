@@ -38,7 +38,7 @@ export default function JadwalKajianClient({
         {data.map((item) => (
           <div
             key={item.id}
-            className="rounded-xl p-4 flex justify-between items-center bg-emerald-100/80/ shadow-xl"
+            className="rounded-xl p-4 flex justify-between items-center bg-emerald-100/80 shadow-xl"
           >
             <div>
               <p className="font-medium text-slate-700">{item.kajianJudul}</p>

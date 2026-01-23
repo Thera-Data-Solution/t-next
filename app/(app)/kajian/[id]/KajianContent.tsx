@@ -2,7 +2,7 @@
 import { notFound } from "next/navigation";
 import { Calendar, Clock, MapPin, Video, Users, ExternalLink, Globe, User, MoveLeft } from "lucide-react";
 import Link from "next/link";
-import { Ustadzh } from "@prisma/client";
+import { Ustadzh } from "@/generated/prisma/client";
 
 export default async function KajianContent({ id }: { id: string }) {
     const res = await fetch(

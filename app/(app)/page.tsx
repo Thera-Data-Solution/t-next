@@ -1,18 +1,42 @@
-import HomeScreen from "@/components/screen/homePage";
-import { Metadata } from "next";
-import { getKajian } from "../service/kajian";
-import { Suspense } from "react";
-import CalendarViewSkeleton from "@/components/screen/homePageSkeleton";
-
-export const metadata: Metadata = {
-  title: 'Scheduler'
-}
+import { unstable_cache } from "next/cache";
+import { getAllWithPagination, getKajianByMonth } from "../service/kajian";
+import CalendarView from "@/components/calendarView";
 
 export default async function Page() {
-  const kajian = getKajian();
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const page = 1;
+  const pageSize = 5;
+
+
+  const cacheKajian = unstable_cache(
+    () => getKajianByMonth(year, month),
+    [`kajian-${year}-${month}`],
+    {
+      tags: [`kajian-${year}-${month}`],
+    }
+  );
+
+  const cacheKajianWithPagination = unstable_cache(
+    () => getAllWithPagination(page, pageSize),
+    [`kajian-upcoming-${page}`],
+    {
+      tags: [`kajian-upcoming-${page}`],
+    }
+  );
+
+  const upcomingInitial = await cacheKajianWithPagination();
+  const kajian = await cacheKajian();
+
   return (
-    <Suspense fallback={<CalendarViewSkeleton />}>
-      <HomeScreen kajian={kajian} />
-    </Suspense>
-  )
+    <div className="p-4">
+      <CalendarView
+        initialUpcoming={upcomingInitial}
+        initialKajian={kajian}
+        initialYear={year}
+        initialMonth={month}
+      />
+    </div>
+  );
 }

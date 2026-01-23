@@ -2,12 +2,12 @@
 
 import React, { useEffect } from 'react';
 import { X, Calendar } from 'lucide-react';
-import { KajianData } from '@/types/event';
 import { EventCard } from './eventCard';
+import { JadwalKajianWithRelations } from './calendarView';
 
 interface DateEventsModalProps {
     date: Date;
-    events: KajianData[];
+    events: JadwalKajianWithRelations[];
     onClose: () => void;
 }
 
