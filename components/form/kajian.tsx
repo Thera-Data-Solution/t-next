@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { createJadwalKajian, updateJadwalKajian } from "../../app/admin/kajian/action";
-import { Genre, JadwalKajian, Umur, Ustadzh } from "@prisma/client";
+import { Genre, JadwalKajian, Umur, Ustadzh } from "@/generated/prisma/client";
 
 
 function toDatetimeLocal(date?: Date | string) {

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import DzikirContent from "./dzikirContent";
 
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export async function generateStaticParams() {
     const categories = await prisma.dzikirCategory.findMany({

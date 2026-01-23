@@ -84,8 +84,8 @@ const TasbihSection: React.FC = () => {
                     </button>
                 </div>
 
-                <div className="arabic text-2xl text-slate-800 mb-2 leading-relaxed">{activeReading.arabic}</div>
-                <div className="font-bold text-slate-800 mb-1">{activeReading.text}</div>
+                <div className="arabic text-2xl text-slate-800 dark:text-slate-100 mb-2 leading-relaxed">{activeReading.arabic}</div>
+                <div className="font-bold text-slate-800 dark:text-slate-200 mb-1">{activeReading.text}</div>
                 <div className="text-xs text-slate-400 italic">{activeReading.meaning}</div>
             </div>
 

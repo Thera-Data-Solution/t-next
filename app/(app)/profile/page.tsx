@@ -1,6 +1,6 @@
 "use client";
 
-import { Settings, User, LogOut, Info, HelpCircle, BookOpenText, LayoutGrid } from "lucide-react";
+import { Settings, User, LogOut, Info, HelpCircle } from "lucide-react";
 import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,6 @@ export default function ProfilePage() {
 
   const role = session?.user?.role;
   const isModerator = role === "Moderator" || role === "Admin";
-  const isAdmin = role === "Admin";
 
 
   const baseMenuItems: MenuItem[] = [
@@ -24,14 +23,7 @@ export default function ProfilePage() {
   ];
 
   const moderatorMenuItems: MenuItem[] = [
-    { name: "Tambah Ustadzh", icon: Settings, action: () => router.push("/admin/ustadzh") },
-    { name: "Tambah Kajian", icon: BookOpenText, action: () => router.push("/admin/kajian") },
-    { name: "Tambah Dzikir", icon: Info, action: () => alert("Tambah Dzikir") },
-    { name: "Kategori Dzikir", icon: LayoutGrid, action: () => alert("Kategori Dzikir") },
-  ];
-
-  const adminMenuItems: MenuItem[] = [
-    { name: "Kelola Pengguna", icon: User, action: () => alert("Kelola Pengguna") },
+    { name: "Panel Admin", icon: Settings, action: () => router.push("/admin") },
   ];
 
 
@@ -104,10 +96,6 @@ export default function ProfilePage() {
 
               {isModerator && (
                 <MenuSection title="Moderator" items={moderatorMenuItems} />
-              )}
-
-              {isAdmin && (
-                <MenuSection title="Administrator" items={adminMenuItems} />
               )}
 
               {/* Logout section */}

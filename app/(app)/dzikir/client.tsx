@@ -1,6 +1,6 @@
 "use client";
 
-import { DzikirCategory } from "@prisma/client";
+import { DzikirCategory } from "@/generated/prisma/client";
 import {ChevronRight } from "lucide-react";
 import Link from "next/link";
 
