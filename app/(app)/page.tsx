@@ -7,7 +7,7 @@ export default async function Page() {
   const year = now.getFullYear();
   const month = now.getMonth();
   const page = 1;
-  const pageSize = 5;
+  const pageSize = 10;
 
 
   const cacheKajian = unstable_cache(
