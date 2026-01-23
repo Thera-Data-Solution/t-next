@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { MapPin, Clock, Users, Video } from 'lucide-react';
-import { KajianData } from '@/types/event';
 import Link from 'next/link';
+import { JadwalKajianWithRelations } from './calendarView';
 
 interface EventCardProps {
-    event: KajianData;
+    event: JadwalKajianWithRelations;
 }
 
 export const EventCard: React.FC<EventCardProps> = ({ event }) => {
@@ -41,11 +41,11 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
         >
             <div className="relative w-28 sm:w-40 shrink-0 overflow-hidden">
                 <img
-                    src={event.gambar}
+                    src={event.gambar || '/placeholder-kajian.jpg'}
                     alt={event.kajianJudul}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/40 to-transparent sm:hidden"></div>
+                <div className="absolute top-0 left-0 w-full h-full bg-linear-to-t from-black/40 to-transparent sm:hidden"></div>
                 <div className="absolute bottom-1.5 left-1.5 sm:top-2 sm:left-2 sm:bottom-auto">
                     <span className="
                 bg-white/80 dark:bg-slate-800/70 

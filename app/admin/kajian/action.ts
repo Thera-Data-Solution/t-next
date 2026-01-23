@@ -1,7 +1,7 @@
 "use server";
 
-import prisma from "@/lib/prisma";
-import { Genre, Umur } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import { Genre, Umur } from "@/generated/prisma/client";
 
 export async function getAllJadwalKajian() {
 

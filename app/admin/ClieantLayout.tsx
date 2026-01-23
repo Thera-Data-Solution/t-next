@@ -55,7 +55,7 @@ const ClientLayout: React.FC<LayoutProps> = ({ children }) => {
                         <div className="h-8 w-px bg-slate-200 mx-1 hidden sm:block"></div>
                         <div className="hidden sm:flex items-center gap-2">
                             <span className="text-xs font-bold text-slate-500 uppercase tracking-tighter">Active Project:</span>
-                            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded">Nurul Al-Falah</span>
+                            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded">CMS</span>
                         </div>
                     </div>
                 </header>

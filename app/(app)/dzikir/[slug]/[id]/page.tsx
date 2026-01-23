@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import DzikirDetailContent from "./DzikirDetailContent";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 /**
  * WAJIB untuk prerender dynamic route

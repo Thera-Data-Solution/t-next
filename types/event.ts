@@ -1,4 +1,4 @@
-import { Ustadzh } from "@prisma/client";
+import { Ustadzh } from "@/generated/prisma/client";
 
 export interface KajianData {
   id: string;

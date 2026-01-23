@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from "@/lib/prisma";
-import { RoleList } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import { RoleList } from "@/generated/prisma/client";
 
 const handler = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -18,10 +18,10 @@ const handler = NextAuth({
         session.user.role = user.role || RoleList.User;
         return session;
       } catch (error) {
-        if(error instanceof Error){
+        if (error instanceof Error) {
           console.error("Error in session callback:", error.message)
         }
-        session.user.role = RoleList.User; 
+        session.user.role = RoleList.User;
         return session;
       }
     }

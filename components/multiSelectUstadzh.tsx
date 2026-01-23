@@ -1,6 +1,6 @@
 "use client";
 
-import { Ustadzh } from "@prisma/client";
+import { Ustadzh } from "@/generated/prisma/client";
 import { useEffect, useState } from "react";
 
 export function MultiSelectUstadzh({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {

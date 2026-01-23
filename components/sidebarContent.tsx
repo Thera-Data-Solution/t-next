@@ -1,4 +1,5 @@
 import { ICONS } from "@/constant/admin";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,6 +11,7 @@ export default function SidebarContent() {
         { label: 'Manage Users', icon: <ICONS.Users />, path: '/admin' },
     ];
     const pathName = usePathname();
+    const { data: session, status } = useSession();
     return (
         <div className="flex flex-col h-full bg-emerald-950 text-white">
             <div className="p-6 border-b border-emerald-900/50 flex items-center gap-3">
@@ -17,7 +19,7 @@ export default function SidebarContent() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 20v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" /><path d="M2 20v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4" /><path d="M12 18V7l-2 2" /><path d="M6 14v-4a6 6 0 1 1 12 0v4" /><rect width="20" height="4" x="2" y="18" rx="1" /></svg>
                 </div>
                 <div>
-                    <h1 className="font-islamic text-xl font-bold tracking-tight text-amber-100">Nurul Admin</h1>
+                    <h1 className="font-islamic text-xl font-bold tracking-tight text-amber-100">Tardi Panel</h1>
                     <p className="text-[10px] uppercase tracking-widest text-emerald-400 font-semibold">CMS Panel v2.0</p>
                 </div>
             </div>
@@ -42,12 +44,10 @@ export default function SidebarContent() {
 
             <div className="p-4 border-t border-emerald-900/50">
                 <div className="bg-emerald-900/30 rounded-2xl p-4 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-emerald-700 flex items-center justify-center font-bold text-amber-200 border border-emerald-600">
-                        UA
-                    </div>
+                    <img src={session?.user?.image || ""} className="w-12 h-12 rounded-full" />
                     <div className="overflow-hidden">
-                        <p className="text-sm font-bold truncate">Ustadz Admin</p>
-                        <p className="text-[10px] text-emerald-400 truncate">Super Administrator</p>
+                        <p className="text-sm font-bold truncate">{session?.user?.name}</p>
+                        <p className="text-[10px] text-emerald-400 truncate">{session?.user?.email}</p>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,10 @@
 "use client";
 
-import { DzikirCategory } from "@prisma/client";
+import { DzikirCategory } from "@/generated/prisma/client";
 import {ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default function ClientPage({ data }: { data: DzikirCategory[] }) {
-
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-6 text-center dark:text-white">Pilih Dzikir</h1>
