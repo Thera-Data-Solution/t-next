@@ -1,13 +1,65 @@
-import { getDzikirByCategory } from "@/app/service/dzikir";
-import { ArrowLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
+"use client"; ''
 
-export default async function DzikirContent({
+import { ArrowLeft, ChevronRight, Loader } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+interface PropsI {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  icon: string;
+  groups: {
+    id: string;
+    order: number;
+    title: string;
+  }[]
+}
+
+export default function DzikirContent({
   slug,
 }: {
   slug: string;
 }) {
-  const selected = await getDzikirByCategory(slug);
+
+  const [selected, setSelected] = useState<PropsI | null>(null);
+  const [loading, setLoading] = useState(true)
+
+
+  useEffect(() => {
+    let active = true
+
+    const fetchData = async () => {
+      const res = await fetch(`/api/dzikir/${slug}`, {
+        next: {
+          revalidate: 10
+        }
+      })
+      if (!active) return
+
+      if (res.ok) {
+        const { category } = await res.json()
+        setSelected(category)
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+
+    return () => {
+      active = false
+    }
+  }, [slug])
+
+
+  if (loading) return (
+    <div className="p-6 text-center text-slate-400 flex items-center justify-center gap-3 text-lg">
+      <Loader size={20} className="animate animate-spin" />
+      Memuat dzikir...
+    </div>
+  )
+
 
   if (!selected) {
     return (

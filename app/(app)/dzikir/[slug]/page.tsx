@@ -1,17 +1,12 @@
 import { Suspense } from "react";
 import DzikirContent from "./dzikirContent";
+import { Metadata } from "next";
 
-import { prisma } from "@/lib/prisma";
 
-export async function generateStaticParams() {
-    const categories = await prisma.dzikirCategory.findMany({
-        select: { slug: true },
-    });
-
-    return categories.map((c) => ({
-        slug: c.slug,
-    }));
-}
+export const metadata: Metadata = {
+    title: "Pilih Dzikir",
+    description: "Kumpulan dzikir harian untuk memperkuat iman dan ketakwaan.",
+};
 
 export default async function Page({
     params,

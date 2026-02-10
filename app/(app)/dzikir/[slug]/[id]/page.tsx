@@ -1,28 +1,5 @@
 import { Suspense } from "react";
 import DzikirDetailContent from "./DzikirDetailContent";
-import { prisma } from "@/lib/prisma";
-
-/**
- * WAJIB untuk prerender dynamic route
- */
-export async function generateStaticParams() {
-  const categories = await prisma.dzikirCategory.findMany({
-    select: {
-      slug: true,
-      groups: {
-        select: { order: true },
-      },
-    },
-  });
-
-  return categories.flatMap((c) =>
-    c.groups.map((g) => ({
-      slug: c.slug,
-      id: String(g.order),
-    }))
-  );
-}
-
 export default async function Page({
   params,
 }: {

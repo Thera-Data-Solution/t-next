@@ -15,6 +15,7 @@ export default async function Page() {
     [`kajian-${year}-${month}`],
     {
       tags: [`kajian-${year}-${month}`],
+      revalidate: 60,
     }
   );
 
@@ -23,6 +24,7 @@ export default async function Page() {
     [`kajian-upcoming-${page}`],
     {
       tags: [`kajian-upcoming-${page}`],
+      revalidate: 60,
     }
   );
 
